@@ -20,3 +20,9 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+// Demo: resolve an example host to IP (non-blocking)
+const { resolveUrlToIp } = require('./utils/helper');
+resolveUrlToIp('example.com')
+	.then(ip => console.log(`example.com -> ${ip}`))
+	.catch(() => {/* ignore in demo */});
