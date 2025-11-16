@@ -10,6 +10,7 @@ router.get('/health', (req, res) => {
 
 // Example resource route — uses service to fetch data
 router.get('/items', listItems);
+// Updated to accept an optional `url` query parameter: /info?url=https://example.com
 router.get('/info', listInfo);
 
 module.exports = router;
