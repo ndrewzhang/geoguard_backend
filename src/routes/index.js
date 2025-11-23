@@ -14,6 +14,3 @@ router.get('/items', listItems);
 router.get('/info', listInfo);
 
 module.exports = router;
-
-
-// Testing testing testing
