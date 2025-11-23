@@ -25,7 +25,7 @@ async function listInfo(req, res, next) {
 
     let locationData = null;
     try {
-      locationData = await lookupIpstack(url, '');
+      locationData = await lookupIpstack(url, 'API KEY HERE');
       console.info('[listInfo] Ipstack location data:', locationData);
     } catch (err) {
       console.error('[listInfo] Error from lookupIpstack:', err);
