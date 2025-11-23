@@ -15,6 +15,14 @@ app.use('/api', routes);
 
 app.get('/', (req, res) => res.json({ ok: true, message: 'GeoGuard API' }));
 
+// Support legacy/root requests by redirecting to the mounted /api routes.
+// This preserves any query string so requests like /info?url=... still work.
+app.get('/info', (req, res) => {
+    console.log('Root /info handler invoked, original url:', req.url);
+    const qs = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    res.redirect(302, `/api/info${qs}`);
+});
+
 // Error handler (should be last)
 app.use(errorHandler);
 

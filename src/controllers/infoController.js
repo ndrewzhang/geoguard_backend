@@ -23,7 +23,7 @@ async function listInfo(req, res, next) {
     }
 
     const items = await getInfo(url);
-    res.json({ ok: true, ip: resolvedIp, data: items });
+    res.json({ ok: true, ip: resolvedIp });
   } catch (err) {
     next(err);
   }
