@@ -1,5 +1,5 @@
 // Simple items service — replace with DB calls as needed
-async function getInfo(url) {
+async function getLocationInfo(url) {
   // Simulate async work (e.g., DB call or fetching remote URL).
   // If a url is provided, include it in the response to demonstrate usage.
   const base = [
@@ -8,26 +8,21 @@ async function getInfo(url) {
   ];
 
   if (url) {
-    // In a real implementation you might fetch or process the URL here.
-    // if (url !== undefined && url !== null && url !== '') {
-      // Use the project's helper to resolve the URL to an IP.
-    // let resolvedIp = null;
-    // try {
-    //   // resolveUrlToIp throws TypeError for bad input and other Errors for DNS failures
-    //   resolvedIp = await resolveUrlToIp(url);
-    // } catch (err) {
-    //   if (err instanceof TypeError) {
-    //     return res.status(400).json({ ok: false, error: err.message || 'Invalid url parameter' });
-    //   }
-    //   // DNS/lookup errors -> Bad Gateway (502)
-    //   return res.status(502).json({ ok: false, error: 'Failed to resolve url to IP' });
-    // }
-    // }
 
-    return base.map(item => ({ ...item, sourceUrl: url }));
+    let locationData = null;
+    try {
+      locationData = await lookupIpstack(url, process.env.IPSTACK_API_KEY);
+      console.info('[listInfo] Ipstack location data:', locationData);
+    } catch (err) {
+      console.error('[listInfo] Error from lookupIpstack:', err);
+      return res.status(500).json({ ok: false, error: 'Internal server error' });
+    }
+
+    //return base.map(item => ({ ...item, sourceUrl: url }));
+    return base.map(item => ({ ...item, location: locationData }));
   }
 
   return base;
 }
 
-module.exports = { getInfo };
+module.exports = { getLocationInfo };
