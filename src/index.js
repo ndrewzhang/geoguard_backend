@@ -26,11 +26,17 @@ app.get('/info', (req, res) => {
 // Error handler (should be last)
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+// Export app for serverless platforms (Vercel) and tests
+module.exports = app;
 
-// Demo: resolve an example host to IP (non-blocking)
-const { resolveUrlToIp } = require('./utils/helper');
-resolveUrlToIp('example.com')
-	.then(ip => console.log(`example.com -> ${ip}`))
-	.catch(() => {/* ignore in demo */});
+// Start the server only when this file is run directly (node src/index.js)
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+    // Demo: resolve an example host to IP (non-blocking)
+    const { resolveUrlToIp } = require('./utils/helper');
+    resolveUrlToIp('example.com')
+        .then(ip => console.log(`example.com -> ${ip}`))
+        .catch(() => {/* ignore in demo */});
+}
