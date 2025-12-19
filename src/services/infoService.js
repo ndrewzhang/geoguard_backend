@@ -20,8 +20,7 @@ async function getLocationInfo(url) {
       throw err;
     }
 
-    //return base.map(item => ({ ...item, sourceUrl: url }));
-    return base.map(item => ({ ...item, location: locationData }));
+    return locationData;
   }
 
   return base;

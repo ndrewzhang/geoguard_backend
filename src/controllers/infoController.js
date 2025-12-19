@@ -21,7 +21,7 @@ async function listInfo(req, res, next) {
       console.log('[listInfo] Calling getLocationInfo with url:', url);
       const items = await getLocationInfo(url);
       console.info('[listInfo] getLocationInfo result:', items);
-      res.json({ ok: true, data: items });
+      res.json(items);
     } catch (err) {
       console.error('[listInfo] Error from getLocationInfo:', err);
       next(err);
